@@ -12,47 +12,72 @@ f_nocturne = open('nocturne.txt')
 f_eating = open('eating_together.txt')
 f_bossoms = open('bossoms.txt')
 
-split_aggregate = f_arise.read().split()
-split_aggregate += f_change1.read().split()
-split_aggregate += f_change2.read().split()
-split_aggregate += f_change3.read().split()
-split_aggregate += f_persimmons.read().split()
-split_aggregate += f_gift.read().split()
-split_aggregate += f_nocturne.read().split()
-split_aggregate += f_eating.read().split()
-split_aggregate += f_bossoms.read().split()
+# split_aggregate = f_arise.read().split()
+# split_aggregate += f_change1.read().split()
+# split_aggregate += f_change2.read().split()
+# split_aggregate += f_change3.read().split()
+# split_aggregate += f_persimmons.read().split()
+# split_aggregate += f_gift.read().split()
+# split_aggregate += f_nocturne.read().split()
+# split_aggregate += f_eating.read().split()
+# split_aggregate += f_bossoms.read().split()
 
-aggregate = word_tokenize(f_arise.read())
-aggregate += word_tokenize(f_change1.read())
-aggregate += word_tokenize(f_change2.read())
-aggregate += word_tokenize(f_change3.read())
-aggregate += word_tokenize(f_persimmons.read())
-aggregate += word_tokenize(f_gift.read())
-aggregate += word_tokenize(f_nocturne.read())
-aggregate += word_tokenize(f_eating.read())
-aggregate += word_tokenize(f_bossoms.read())
+split_aggregate = []
+split_aggregate.append(f_arise.read().split())
+split_aggregate.append(f_change1.read().split())
+split_aggregate.append(f_change2.read().split())
+split_aggregate.append(f_change3.read().split())
+split_aggregate.append(f_persimmons.read().split())
+split_aggregate.append(f_nocturne.read().split())
+split_aggregate.append(f_eating.read().split())
+split_aggregate.append(f_bossoms.read().split())
+split_aggregate.append(f_gift.read().split())
 
 corpus = {}
 word_list = []
-for token in split_aggregate:
-    if token not in word_list:
-        word_list.append(token)
+
+for poem in split_aggregate:
+    for token in poem:
+        if token not in word_list:
+            word_list.append(token)
+#
+# for word in word_list:
+#     corpus[word] = {}
 
 for word in word_list:
-    temp_dict = {}
-    for i in range(len(split_aggregate) - 1):
-        if split_aggregate[i] == word:
-            if split_aggregate[i + 1] not in temp_dict:
-                temp_dict[split_aggregate[i + 1]] = 1
-            else:
-                temp_dict[split_aggregate[i + 1]] += 1
-    corpus[word] = temp_dict
+    corpus[word] = {}
+    for poem in split_aggregate:
+        for i in range(len(poem) - 1):
+            if poem[i] == word:
+                if poem[i + 1] not in corpus[word]:
+                    corpus[word][poem[i + 1]] = 1
+                else:
+                    corpus[word][poem[i + 1]] += 1
+
+
+
+
+# corpus = {}
+# word_list = []
+# for token in first_aggregate:
+#     if token not in word_list:
+#         word_list.append(token)
+#
+# for word in word_list:
+#     temp_dict = {}
+#     for i in range(len(first_aggregate) - 1):
+#         if first_aggregate[i] == word:
+#             if first_aggregate[i + 1] not in temp_dict:
+#                 temp_dict[first_aggregate[i + 1]] = 1
+#             else:
+#                 temp_dict[first_aggregate[i + 1]] += 1
+#     corpus[word] = temp_dict
 
 def generate_poem():
     first_word = random.choice(list(corpus.items()))[0]
     poem = first_word
     curr = first_word
-    while len(poem) < 1000:
+    while len(poem) < 400:
         next_word = choose_next(curr)
         poem += ' ' + next_word
         curr = next_word
