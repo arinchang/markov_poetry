@@ -1,5 +1,3 @@
-# import nltk
-from nltk.tokenize import word_tokenize
 import random
 
 f_arise = open('arise.txt')
@@ -11,16 +9,6 @@ f_gift = open('gift.txt')
 f_nocturne = open('nocturne.txt')
 f_eating = open('eating_together.txt')
 f_bossoms = open('bossoms.txt')
-
-# split_aggregate = f_arise.read().split()
-# split_aggregate += f_change1.read().split()
-# split_aggregate += f_change2.read().split()
-# split_aggregate += f_change3.read().split()
-# split_aggregate += f_persimmons.read().split()
-# split_aggregate += f_gift.read().split()
-# split_aggregate += f_nocturne.read().split()
-# split_aggregate += f_eating.read().split()
-# split_aggregate += f_bossoms.read().split()
 
 split_aggregate = []
 split_aggregate.append(f_arise.read().split())
@@ -40,9 +28,6 @@ for poem in split_aggregate:
     for token in poem:
         if token not in word_list:
             word_list.append(token)
-#
-# for word in word_list:
-#     corpus[word] = {}
 
 for word in word_list:
     corpus[word] = {}
@@ -54,25 +39,6 @@ for word in word_list:
                 else:
                     corpus[word][poem[i + 1]] += 1
 
-
-
-
-# corpus = {}
-# word_list = []
-# for token in first_aggregate:
-#     if token not in word_list:
-#         word_list.append(token)
-#
-# for word in word_list:
-#     temp_dict = {}
-#     for i in range(len(first_aggregate) - 1):
-#         if first_aggregate[i] == word:
-#             if first_aggregate[i + 1] not in temp_dict:
-#                 temp_dict[first_aggregate[i + 1]] = 1
-#             else:
-#                 temp_dict[first_aggregate[i + 1]] += 1
-#     corpus[word] = temp_dict
-
 def generate_poem():
     first_word = random.choice(list(corpus.items()))[0]
     poem = first_word
@@ -83,7 +49,6 @@ def generate_poem():
         curr = next_word
     return poem
 
-
 # chooses next word of the poem
 def choose_next(curr):
     probability_list = []
@@ -92,3 +57,6 @@ def choose_next(curr):
             probability_list.append(key)
     word = random.choice(probability_list)
     return word
+
+if __name__ == '__main__':
+    print(generate_poem())
