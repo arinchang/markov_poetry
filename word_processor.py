@@ -40,7 +40,7 @@ for word in word_list:
                     corpus[word][poem[i + 1]] += 1
 
 def generate_poem():
-    first_word = random.choice(list(corpus.items()))[0]
+    first_word = choose_uppercase()
     poem = first_word
     curr = first_word
     while len(poem) < 400:
@@ -49,14 +49,23 @@ def generate_poem():
         curr = next_word
     return poem
 
+#Choose a word that is capitalized
+def choose_uppercase():
+    uppercase_words = []
+    for key, val in corpus.items():
+        if key[0].isupper():
+            uppercase_words.append(key)
+    return random.choice(uppercase_words)
+
 # chooses next word of the poem
 def choose_next(curr):
+    if curr[-1] == '.':
+        return choose_uppercase()
     probability_list = []
     for key, val in corpus[curr].items():
         for i in range(val):
             probability_list.append(key)
-    word = random.choice(probability_list)
-    return word
+    return random.choice(probability_list)
 
 if __name__ == '__main__':
     print(generate_poem())
