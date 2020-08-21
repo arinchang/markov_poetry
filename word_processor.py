@@ -1,5 +1,6 @@
 # import nltk
 from nltk.tokenize import word_tokenize
+import random
 
 f_arise = open('arise.txt')
 f_change1 = open('changing_places1.txt')
@@ -36,3 +37,19 @@ for word in word_list:
             else:
                 temp_dict[aggregate[i + 1]] += 1
     corpus[word] = temp_dict
+
+def generate_poem():
+    first_word = random.choice(list(corpus.items()))[0]
+    poem = first_word
+    curr = first_word
+    while len(poem) < 1000:
+        max_val = 0
+        max_key = ''
+        for key, val in corpus[curr].items():
+            if val > max_val:
+                max_val = val
+                max_key = key
+        poem += max_key
+        curr = max_key
+
+    return poem
