@@ -43,7 +43,7 @@ def generate_poem():
     first_word = choose_uppercase()
     poem = first_word
     curr = first_word
-    while len(poem) < 400:
+    while len(poem) < 400 or curr[-1] != '.':
         next_word = choose_next(curr)
         poem += ' ' + next_word
         curr = next_word
